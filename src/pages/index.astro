@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Showcase from "../components/Showcase.astro";
+import About from "../components/About.astro";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/themes/light.css";
+import Splash from "../components/Splash.astro";
+---
+
+<BaseLayout
+	showHeader={true}
+	CMS="https://identity.netlify.com/v1/netlify-identity-widget.js">
+	<Hero />
+	<About />
+	<Showcase />
+	<Splash />
+	<script>
+		declare global {
+			interface Window {
+				netlifyIdentity: any;
+			}
+		}
+		if (window.netlifyIdentity) {
+			window.netlifyIdentity.on("init", (user: any) => {
+				if (!user) {
+					window.netlifyIdentity.on("login", () => {
+						document.location.href = "/admin/";
+					});
+				}
+			});
+		}
+	</script>
+</BaseLayout>

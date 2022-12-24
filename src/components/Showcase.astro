@@ -1,0 +1,68 @@
+---
+import HorizontalCard from "./HorizontalCard.astro";
+
+const posts = (await Astro.glob("../pages/blog/posts/*.{md,mdx}")).sort(
+	(a, b) =>
+		new Date(b.frontmatter.pubDate).valueOf() -
+		new Date(a.frontmatter.pubDate).valueOf()
+);
+
+const last_posts = posts.slice(0, 3);
+import img from "../assets/post_img.webp";
+---
+
+<div
+	class="max-w-[max(50%,26rem)] mx-auto flex gap-36 justify-center content-center flex-col">
+	<div class="flex flex-col">
+		<h1 id="projects" class="text-3xl w-full font-bold mb-2 pt-14">
+			Some of my projects
+		</h1>
+		<div class="divider bg-black h-[1px] rounded-full"></div>
+
+		<HorizontalCard
+			title="Demo Project 1"
+			img={img}
+			desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+			url="#"
+			badge="NEW"
+		/>
+		<div class="divider"></div>
+		<HorizontalCard
+			title="Demo Project 2"
+			img={img}
+			desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+			url="#"
+			badge="FOSS"
+		/>
+		<div class="divider"></div>
+		<HorizontalCard
+			title="Demo Project 3"
+			img={img}
+			desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+			url="#"
+			badge="FOSS"
+		/>
+		<div class="divider"></div>
+	</div>
+	<div id="blog" class="flex flex-col">
+		<h1 class="text-3xl w-full font-bold mb-5 pt-14">Latest Blogs</h1>
+		<div class="divider bg-black h-[1px] rounded-full"></div>
+
+		{
+			last_posts.map((post: any) => (
+				<>
+					<HorizontalCard
+						title={post.frontmatter.title}
+						img={post.frontmatter.heroImage}
+						desc={post.frontmatter.description}
+						url={post.url}
+						tag={post.frontmatter.tag}
+						target="_self"
+					/>
+					<div class="divider" />
+				</>
+			))
+		}
+		<a href="/blog" class="btn mx-auto">View more</a>
+	</div>
+</div>
