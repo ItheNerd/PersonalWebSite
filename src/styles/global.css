@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--primary: 6, 18, 36;
+		--secondary: 160, 174, 192;
+		--accent: 113, 128, 150;
+		--background: 255, 255, 255;
+		--main: 13, 1, 6;
+		--header: 45, 55, 72;
+	}
+	*,
+	*:before,
+	*:after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	::-webkit-scrollbar {
+		max-width: 7px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: rgba(75, 84, 94, 0.452);
+		border-radius: 10rem;
+		padding: 4%;
+	}
+
+	body {
+		@apply font-[Raleway];
+		overflow: overlay;
+	}
+
+	li {
+		@apply cursor-pointer;
+	}
+}
+
+@layer components {
+	.nav_btn {
+		@apply relative inline-block tracking-widest overflow-hidden text-black uppercase font-medium text-xl transition-all duration-300 ease-out rounded-xl before:absolute before:w-[2px] before:left-0 before:right-0 before:top-0 before:bottom-0 before:m-auto before:-z-10 before:duration-500 before:transition-all before:ease-[cubic-bezier(0.445,0.05,0.55,0.95)] before:content-[''] hover:before:scale-x-[200] hover:before:bg-black hover:focus:scale-95 hover:text-white px-4 py-3;
+	}
+
+	#menu[data-active-index="0"] > #menu-background-image {
+		background-position: center 10%;
+	}
+
+	#menu[data-active-index="1"] > #menu-background-image {
+		background-position: center 30%;
+	}
+
+	#menu[data-active-index="2"] > #menu-background-image {
+		background-position: center 50%;
+	}
+
+	#menu[data-active-index="3"] > #menu-background-image {
+		background-position: center 70%;
+	}
+}
+
+@layer utilities {
+	.animation-delay-2000 {
+		animation-delay: 2s;
+	}
+
+	.animation-delay-4000 {
+		animation-delay: 4s;
+	}
+	.clip-path-circle-1 {
+		clip-path: circle(0px at max(27rem, 79%) 3.5%);
+	}
+	.clip-path-circle-2 {
+		clip-path: circle(3500px at 100% 0%);
+	}
+}
