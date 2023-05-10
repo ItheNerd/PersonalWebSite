@@ -1,0 +1,51 @@
+---
+const h1 = ["H", "E", "Y", " ", "T", "H", "E", "R", "E", "👋!"];
+---
+
+<div
+  id="splash"
+  class="z-10 fixed origin-bottom w-full h-full bg-base-300 top-0 right-0"
+>
+  <section class="relative flex flex-col justify-center items-center h-screen">
+    <h1
+      id="zl"
+      class="z-20 overflow-hidden sm:text-6xl md:text-7xl font-semibold"
+    >
+      {
+        h1.map((c) => (
+          <span class="zl-char inline-block whitespace-pre">{c}</span>
+        ))
+      }
+    </h1>
+  </section>
+
+  <script>
+    import anime from "animejs";
+
+    anime
+      .timeline()
+      .add({
+        targets: ".zl-char",
+        translateY: ["150%", 0],
+        opacity: [0, 1],
+        easing: "easeOutExpo",
+        duration: 900,
+        delay: anime.stagger(35),
+      })
+      .add({
+        targets: ".zl-char",
+        translateY: 150,
+        opacity: [1, 0],
+        easing: "easeOutExpo",
+        duration: 1000,
+        delay: anime.stagger(35, { start: 120 }),
+      });
+    anime({
+      targets: "#splash",
+      scaleY: 0,
+      duration: 1500,
+      easing: "easeInOutExpo",
+      delay: 1650,
+    });
+  </script>
+</div>
