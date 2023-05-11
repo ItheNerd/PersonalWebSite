@@ -16,12 +16,16 @@ import Splash from "../components/Splash.astro";
 
 <BaseLayout
   showHeader={true}
+  useDefault={false}
   CMS="https://identity.netlify.com/v1/netlify-identity-widget.js"
 >
-  <Hero />
-  <About />
-  <Showcase />
-  <Splash />
+  <div class="max-w-[max(80%,30rem)] mx-auto px-2 sm:px-0">
+    <Hero />
+    <About />
+    <Showcase />
+    <Splash />
+  </div>
+
   <script>
     declare global {
       interface Window {

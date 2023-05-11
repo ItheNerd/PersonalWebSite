@@ -32,7 +32,11 @@ const {
   </head>
   <body>
     <Header title={SITE_TITLE} show={showHeader} />
-    <div class={useDefault ? "pt-20 max-w-[max(75%,28rem)] mx-auto" : ""}>
+    <div
+      class={useDefault
+        ? "pt-20 max-w-[max(80%,30rem)] mx-auto px-6 sm:px-0"
+        : ""}
+    >
       <slot />
     </div>
     <Footer show={showFooter} />

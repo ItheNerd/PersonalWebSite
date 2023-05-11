@@ -4,21 +4,22 @@ import { focus, familiar } from "../utils";
 ---
 
 <section
-	id="about"
-	class="mb-40 sitw max-w-[max(50%,27rem)] mx-auto text-center pt-16">
-	<h2 class="font-semibold text-2xl">Who am I ?</h2>
-	<p class="tracking-wide leading-7 mt-7 mx-auto">
-		I am a self-driven web developer with two years of experience in front-end
-		development. I love developing user-centric applications that are enjoyable
-		to use. Currently learning server-side technologies like node.js and
-		databases.
-	</p>
-	<h3 class="text-xl mt-16">What I focus on</h3>
-	<div class="flex flex-wrap justify-center mt-6 gap-8 mx-auto">
-		{focus.map((props) => <Skill {...props} />)}
-	</div>
-	<h3 class="text-xl mt-16">I am familiar working with</h3>
-	<div class="flex justify-center flex-wrap mt-6 gap-8 mx-auto">
-		{familiar.map((props) => <Skill {...props} />)}
-	</div>
+  id="about"
+  class="mb-40 sitw max-w-[max(50%,27rem)] mx-auto text-center pt-16 px-7 sm:px-0"
+>
+  <h2 class="font-semibold text-2xl">Who am I ?</h2>
+  <p class="tracking-wide leading-7 mt-7 mx-auto">
+    I am a self-driven web developer with two years of experience in front-end
+    development. I love developing user-centric applications that are enjoyable
+    to use. Currently learning server-side technologies like node.js and
+    databases.
+  </p>
+  <h3 class="text-xl mt-16">What I focus on</h3>
+  <div class="flex flex-wrap justify-center mt-6 gap-8 mx-auto">
+    {focus.map((props) => <Skill {...props} />)}
+  </div>
+  <h3 class="text-xl mt-16">I am familiar working with</h3>
+  <div class="flex justify-center flex-wrap mt-6 gap-8 mx-auto">
+    {familiar.map((props) => <Skill {...props} />)}
+  </div>
 </section>
