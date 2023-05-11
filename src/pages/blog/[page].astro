@@ -3,83 +3,137 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import HorizontalCard from "../../components/HorizontalCard.astro";
 
 export async function getStaticPaths({ paginate }) {
+  const posts = await getPosts();
+  const tags = await getTags(posts);
+
+  return paginate(posts, { props: { tags }, pageSize: 3 });
+}
+
+export async function getPosts() {
   const posts = (await Astro.glob("./posts/*.{md,mdx}")).sort(
     (a, b) =>
       new Date(b.frontmatter.pubDate).valueOf() -
       new Date(a.frontmatter.pubDate).valueOf()
   );
-
-  return paginate(posts, { pageSize: 3 });
+  return posts;
 }
-const { page } = Astro.props;
+
+export async function getTags(posts) {
+  return [
+    ...new Set(
+      posts
+        .flatMap((post) => post.frontmatter.tag)
+        .map((x) => (x === undefined ? "noTag" : x))
+    ),
+  ];
+}
+
+const { page, tags } = Astro.props;
+console.log(tags);
 ---
 
 <BaseLayout title={"Blog Page " + page.currentPage}>
-  <div id="blog" class="pt-20 max-w-[max(75%,28rem)] mx-auto">
-    <div class="flex items-center justify-between text-xl font-semibold">
-      <h1>{"Blog Page " + page.currentPage}</h1>
-      <span class="text-base bg-gray-200 p-2 rounded-lg"
-        >{"Blogs from " + (page.start + 1) + " to " + (page.end + 1)}</span
+  <div class="flex items-center justify-between text-lg font-medium">
+    <h1>Blog Page <span class="font-bold">{page.currentPage}</span></h1>
+    <div class="text-base flex gap-2">
+      <button
+        id="filter-toggle"
+        class="bg-gray-200 text-base rounded-lg p-2 cursor-pointer capitalize"
+        >filter</button
       >
+      <div class="text-base bg-gray-200 p-2 rounded-lg">
+        {"Blogs from " + (page.start + 1) + " to " + (page.end + 1)}
+      </div>
     </div>
+  </div>
 
-    <div class="divider bg-black h-[1px] rounded-full"></div>
-    <ul>
+  <div class="divider bg-black h-[1px] rounded-full"></div>
+  <div class="py-4 mx-auto flex justify-center">
+    <ul
+      id="filter-div"
+      class="bg-gray-200 rounded-lg menu menu-horizontal max-w-fit justify-center"
+    >
       {
-        page.data.map((post) => (
-          <>
-            <HorizontalCard
-              title={post.frontmatter.title}
-              img={post.frontmatter.heroImage}
-              desc={post.frontmatter.description}
-              url={post.url}
-              date={post.frontmatter.pubDate}
-              tag={post.frontmatter.tag}
-              target="_self"
-            />
-            <div class="divider my-0" />
-          </>
+        tags.map((tag) => (
+          <li class="tag">
+            <a href={`/blog/tags/${tag}`}>{tag}</a>
+          </li>
         ))
       }
     </ul>
+  </div>
 
-    <div class="flex justify-between">
-      {
-        page.url.prev ? (
-          <a href={page.url.prev} class="btn btn-ghost my-10 mx-5">
-            <svg
-              class="h-6 w-6 fill-current md:h-8 md:w-8"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-            </svg>
-            Recent posts
-          </a>
-        ) : (
-          <div />
-        )
-      }
-      {
-        page.url.next ? (
-          <a href={page.url.next} class="btn btn-ghost my-10 mx-5">
-            Older Posts
-            <svg
-              class="h-6 w-6 fill-current md:h-8 md:w-8"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-            </svg>
-          </a>
-        ) : (
-          <div />
-        )
-      }
-    </div>
+  <ul>
+    {
+      page.data.map((post) => (
+        <>
+          <HorizontalCard
+            title={post.frontmatter.title}
+            img={post.frontmatter.heroImage}
+            desc={post.frontmatter.description}
+            url={post.url}
+            date={post.frontmatter.pubDate}
+            tag={post.frontmatter.tag}
+            target="_self"
+          />
+          <div class="divider my-0" />
+        </>
+      ))
+    }
+  </ul>
+
+  <div class="flex justify-between">
+    {
+      page.url.prev ? (
+        <a href={page.url.prev} class="btn btn-ghost my-10 mx-5">
+          <svg
+            class="h-6 w-6 fill-current md:h-8 md:w-8"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+          </svg>
+          Recent posts
+        </a>
+      ) : (
+        <div />
+      )
+    }
+    {
+      page.url.next ? (
+        <a href={page.url.next} class="btn btn-ghost my-10 mx-5">
+          Older Posts
+          <svg
+            class="h-6 w-6 fill-current md:h-8 md:w-8"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+          </svg>
+        </a>
+      ) : (
+        <div />
+      )
+    }
   </div>
 </BaseLayout>
+<script>
+  const button = document.getElementById("filter-toggle");
+  const filterDiv = document.getElementById("filter-div");
+  let flag = false;
+
+  function toggleFilterBlock() {
+    flag = !flag;
+    if (flag) {
+      filterDiv.style.display = "flex";
+    } else {
+      filterDiv.style.display = "none";
+    }
+  }
+
+  button.addEventListener("click", toggleFilterBlock);
+</script>

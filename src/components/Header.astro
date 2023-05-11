@@ -27,9 +27,15 @@ const nav_list = ["home", "about", "projects", "blog"];
         <ul id="navButton" class="-translate-x-[31rem]">
           {nav_list.map((item, key) => (
             <li class="flex items-center flex-col list-none my-16 capitalize">
-              <a href={`/#${item}`} class="nav_btn">
-                {item}
-              </a>
+              {item != "blog" ? (
+                <a href={`/#${item}`} class="nav_btn">
+                  {item}
+                </a>
+              ) : (
+                <a href={`/blog`} class="nav_btn">
+                  {item}
+                </a>
+              )}
             </li>
           ))}
         </ul>
