@@ -36,22 +36,18 @@ console.log(tags);
   <div class="flex items-center justify-between text-lg font-medium">
     <h1>Blog Page <span class="font-bold">{page.currentPage}</span></h1>
     <div class="text-base flex gap-2">
-      <button
-        id="filter-toggle"
-        class="bg-gray-200 text-base rounded-lg p-2 cursor-pointer capitalize"
-        >filter</button
-      >
-      <div class="text-base bg-gray-200 p-2 rounded-lg">
+      <button id="filter-toggle" class="btn">filter</button>
+      <div class="btn btn-ghost btn-active cursor-text">
         {"Blogs from " + (page.start + 1) + " to " + (page.end + 1)}
       </div>
     </div>
   </div>
 
-  <div class="divider bg-black h-[1px] rounded-full"></div>
+  <div class="divider"></div>
   <div class="py-4 mx-auto flex justify-center">
     <ul
       id="filter-div"
-      class="bg-gray-200 rounded-lg menu menu-horizontal max-w-fit justify-center hidden"
+      class="rounded-lg menu menu-horizontal border-2 border-gray-300 max-w-fit justify-center hidden"
     >
       {
         tags.map((tag) => (

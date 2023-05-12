@@ -23,7 +23,7 @@ const { title, img, desc, url, tag, target = "_blank" } = Astro.props;
               tag.map((tag: any) => (
                 <a
                   href={`/blog/tags/${tag}`}
-                  class="badge badge-outline rounded-md group-hover:rounded-md group-hover:badge "
+                  class="badge badge-outline rounded-md group-hover:rounded-md group-hover:badge"
                 >
                   {tag}
                 </a>
